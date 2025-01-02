@@ -23,8 +23,8 @@ export const Experience = () => {
 			/>
 			<Environment background={'both'} files={'/textures/envmap.hdr'} />
 			<Float
-				position={[-1, 0.5, 0]}
-				scale={0.5}
+				position={[-1, 0.3, 0]}
+				scale={0.3}
 				rotationIntensity={1.5}
 				speed={5}
 			>

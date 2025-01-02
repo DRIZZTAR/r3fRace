@@ -1,3 +1,4 @@
+import { usePlane } from '@react-three/cannon';
 import { MeshReflectorMaterial } from '@react-three/drei';
 import { useLoader } from '@react-three/fiber';
 import { useEffect, useRef } from 'react';
@@ -5,6 +6,14 @@ import { BufferAttribute } from 'three';
 import { TextureLoader } from 'three/src/loaders/TextureLoader';
 
 export function Ground() {
+	const [ref] = usePlane(
+		() => ({
+			type: 'Static',
+			rotation: [-Math.PI / 2, 0, 0],
+		}),
+		useRef(null)
+	);
+
 	const [gridMap, aoMap, alphaMap] = useLoader(TextureLoader, [
 		'/textures/grid.png',
 		'/textures/ground-ao.png',
@@ -16,9 +25,9 @@ export function Ground() {
 	}, [gridMap]);
 
 	const meshRef = useRef(null);
-  const meshRef2 = useRef(null);
+	const meshRef2 = useRef(null);
 
-  useEffect(() => {
+	useEffect(() => {
 		let uvs = meshRef.current.geometry.attributes.uv.array;
 		meshRef.current.geometry.setAttribute(
 			'uv2',
@@ -30,9 +39,9 @@ export function Ground() {
 			'uv2',
 			new BufferAttribute(uvs2, 2)
 		);
-  }, [meshRef.current]);
+	}, [meshRef.current]);
 
-  return (
+	return (
 		<>
 			<mesh
 				ref={meshRef2}
@@ -77,5 +86,5 @@ export function Ground() {
 				/>
 			</mesh>
 		</>
-  );
+	);
 }
