@@ -3,6 +3,7 @@ import { MeshTransmissionMaterial } from '@react-three/drei';
 import { useFrame, useLoader } from '@react-three/fiber';
 import { useEffect, useRef } from 'react';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+import { useControls } from '../hooks/useControls';
 import { useWheels } from '../hooks/useWheels';
 import { WheelDebug } from './WheelDebug';
 export function Car() {
@@ -34,6 +35,8 @@ export function Car() {
 		}),
 		useRef(null)
 	);
+
+  useControls(vehicleApi, chassisApi);
 
 	useEffect(() => {
 		mesh.scale.set(0.0012, 0.0012, 0.0012);
