@@ -1,4 +1,5 @@
 import { useBox, useRaycastVehicle } from '@react-three/cannon';
+import { MeshTransmissionMaterial } from '@react-three/drei';
 import { useFrame, useLoader } from '@react-three/fiber';
 import { useEffect, useRef } from 'react';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
@@ -43,13 +44,29 @@ export function Car() {
 		<group ref={vehicle} name='vehicle'>
 			{/* <primitive object={mesh} rotation-y={Math.PI} /> */}
 			<mesh ref={chassisBody}>
-				<meshBasicMaterial transparent={true} opacity={0.3} />
+				{/* <meshBasicMaterial transparent={true} opacity={0.3} /> */}
+				<MeshTransmissionMaterial
+					transmissionSampler={true}
+					backside={true}
+					samples={4}
+					transmission={1}
+					thickness={0.5}
+					chromaticAberration={10}
+					anisotropy={1}
+					distortion={1}
+					distortionScale={0.3}
+					temporalDistortion={0.02}
+					ior={1.8}
+					clearcoat={2}
+					attenuationDistance={1}
+					roughness={0.05}
+				/>
 				<boxGeometry args={chassisBodyArgs} />
 			</mesh>
-      <WheelDebug wheelRef={wheels[0]} radius={wheelRadius} />
-      <WheelDebug wheelRef={wheels[1]} radius={wheelRadius} />
-      <WheelDebug wheelRef={wheels[2]} radius={wheelRadius} />
-      <WheelDebug wheelRef={wheels[3]} radius={wheelRadius} />
+			<WheelDebug wheelRef={wheels[0]} radius={wheelRadius} />
+			<WheelDebug wheelRef={wheels[1]} radius={wheelRadius} />
+			<WheelDebug wheelRef={wheels[2]} radius={wheelRadius} />
+			<WheelDebug wheelRef={wheels[3]} radius={wheelRadius} />
 		</group>
 	);
 }
