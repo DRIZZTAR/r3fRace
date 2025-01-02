@@ -8,8 +8,7 @@ import {
 import { Suspense, suspense } from 'react';
 import { Track } from './Track';
 import { Ground } from './Ground';
-import { TextureLoader } from 'three/src/loaders/TextureLoader';
-import { useLoader } from '@react-three/fiber';
+import { Car } from './Car';
 
 export const Experience = () => {
 	const eightBit = useTexture('/textures/metal8bit.jpg');
@@ -36,6 +35,7 @@ export const Experience = () => {
 			</Float>
 			<Track />
 			<Ground />
+			<Car />
 		</Suspense>
 	);
 };
