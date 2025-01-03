@@ -4,6 +4,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { TextureLoader } from 'three/src/loaders/TextureLoader';
 import { ColliderBox } from './ColliderBox';
 import { Ramp } from './Ramp';
+import { TwitterCard } from './TwitterCard';
 
 export function Track() {
 	const result = useLoader(GLTFLoader, '/models/track.glb');
@@ -22,6 +23,8 @@ export function Track() {
 			</mesh>
 
 			<Ramp />
+
+			{/* <TwitterCard position={[-2, 0, 0]} /> */}
 
 			<ColliderBox position={[1.75, 0, 0.5]} scale={[0.3, 1, 0.3]} />
 			<ColliderBox position={[2.5, 0, -1.4]} scale={[0.3, 1, 0.3]} />
