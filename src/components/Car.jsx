@@ -6,7 +6,8 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { useControls } from '../hooks/useControls';
 import { useWheels } from '../hooks/useWheels';
 import { WheelDebug } from './WheelDebug';
-export function Car() {
+import { Quaternion, Vector3 } from 'three';
+export function Car({ thirdPerson }) {
 	let mesh = useLoader(GLTFLoader, '/models/car.glb').scene;
 
 	const position = [-1.5, 0.5, 3];
@@ -36,7 +37,28 @@ export function Car() {
 		useRef(null)
 	);
 
-  useControls(vehicleApi, chassisApi);
+	useControls(vehicleApi, chassisApi);
+
+	useFrame(state => {
+		if (!thirdPerson) return;
+
+		let position = new Vector3(0, 0, 0);
+		position.setFromMatrixPosition(chassisBody.current.matrixWorld);
+
+		let quaternion = new Quaternion(0, 0, 0, 0);
+		quaternion.setFromRotationMatrix(chassisBody.current.matrixWorld);
+
+		let wDir = new Vector3(0, 0, -1);
+		wDir.applyQuaternion(quaternion);
+		wDir.normalize();
+
+		let cameraPosition = position
+			.clone()
+			.add(wDir.clone().multiplyScalar(-1).add(new Vector3(0, 0.3, 0)));
+
+			state.camera.position.copy(cameraPosition);
+			state.camera.lookAt(position);
+	});
 
 	useEffect(() => {
 		mesh.scale.set(0.0012, 0.0012, 0.0012);
@@ -45,9 +67,15 @@ export function Car() {
 
 	return (
 		<group ref={vehicle} name='vehicle'>
-			{/* <primitive object={mesh} rotation-y={Math.PI} /> */}
-			<mesh ref={chassisBody}>
-				{/* <meshBasicMaterial transparent={true} opacity={0.3} /> */}
+			<group ref={chassisBody} name='chassisBody'>
+				<primitive
+					object={mesh}
+					position={[0, -0.09, 0]}
+					rotation-y={Math.PI}
+				/>
+			</group>
+
+			{/* <mesh ref={chassisBody}>
 				<MeshTransmissionMaterial
 					transmissionSampler={true}
 					backside={true}
@@ -65,7 +93,7 @@ export function Car() {
 					roughness={0.05}
 				/>
 				<boxGeometry args={chassisBodyArgs} />
-			</mesh>
+			</mesh> */}
 			<WheelDebug wheelRef={wheels[0]} radius={wheelRadius} />
 			<WheelDebug wheelRef={wheels[1]} radius={wheelRadius} />
 			<WheelDebug wheelRef={wheels[2]} radius={wheelRadius} />
