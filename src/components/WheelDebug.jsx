@@ -1,6 +1,6 @@
 import { MeshTransmissionMaterial } from "@react-three/drei";
 
-const debug = false;
+const debug = true;
 
 export const WheelDebug = ({ radius, wheelRef }) => {
 	return (
@@ -24,7 +24,7 @@ export const WheelDebug = ({ radius, wheelRef }) => {
 						clearcoat={0.82}
 						attenuationDistance={1}
 						roughness={0.05}
-					/>
+					/>s
 				</mesh>
 			</group>
 		)

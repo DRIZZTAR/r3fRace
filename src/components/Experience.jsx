@@ -10,6 +10,7 @@ import { Track } from './Track';
 import { Ground } from './Ground';
 import { Car } from './Car';
 import { ColliderBox } from './ColliderBox';
+import { Perf } from 'r3f-perf';
 
 export const Experience = () => {
 	const eightBit = useTexture('/textures/metal8bit.jpg');
@@ -36,6 +37,7 @@ export const Experience = () => {
 
 	return (
 		<Suspense fallback={null}>
+			<Perf position='top-left' />
 			<PerspectiveCamera makeDefault position={cameraPosition} fov={40} />
 			{!thirdPerson && <OrbitControls target={[-2.64, -0.71, 0.03]} />}
 			<Environment background={'both'} files={'/textures/envmap.hdr'} />
